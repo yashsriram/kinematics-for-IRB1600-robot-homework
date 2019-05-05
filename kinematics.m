@@ -34,13 +34,19 @@ disp('Pose of end effector given by fkine():');
 display(poseByFKINE)
 
 % (c)
+disp('Original joint angles:');
+display(thetas_d)
+
 jointAngles_d = inverseKinematics(poseByUs, as, ds);
 disp('Joint angles predicted by us:');
-display(jointAngles_d * pi / 180)
+display(jointAngles_d)
+IRB1600.fkine(jointAngles_d * pi / 180)
 
 % (d)
-jointAngles = IRB1600.ikine(poseByUs, 'ilimit', 10000);
 disp('Joint angles given by ikine():');
-display(jointAngles)
-disp('Original joint angles:');
-display(thetas_r)
+jointAngles = IRB1600.ikine(poseByUs);
+display(jointAngles * 180 / pi)
+IRB1600.fkine(jointAngles)
+
+jointAngles = IRB1600.ikine(poseByUs, [ pi / 2, 0, 0, 0, 0, pi / 4 ]);
+display(jointAngles * 180 / pi)
